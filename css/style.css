@@ -1,0 +1,613 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input, select, textarea {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 12px;
+	list-style-type: none;
+	font-family: 'Mukta', sans-serif;
+	font-weight: 400;
+	color: #444;
+	-webkit-text-size-adjust: 100%;
+	text-decoration: none;
+}
+
+:root{
+    --cube-view-dim: 80px;
+}
+
+/*================*/
+
+body{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6{
+    letter-spacing: 1px;
+    text-align: center;
+    color: #252529;
+    text-transform: uppercase;
+}
+
+h2{
+    color: #252529;
+    text-shadow: 1px 1px 0px #656571;
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 19px;
+}
+
+
+.border-top{
+    border-top: 1px solid #888;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+/*================*/
+
+.environment-container{
+    position: fixed;
+    left: 220px;
+    right: 0;
+    height: 100%;
+    perspective: 1200px;
+    -webkit-perspective: 1200px;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    z-index: 1;
+}
+
+.environment{
+    position: absolute;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    transform-origin: center;
+    -webkit-transform-origin: center;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+}
+
+.ground, .virtual-ground{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    -webkit-transform-origin: center;
+}
+
+.ground{
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    z-index: 1;
+    background-color: #ddd;
+    background-size: 30%;
+}
+
+.virtual-ground{
+    transform: translateZ(1px);
+    -moz-transform: translateZ(1px);
+    -webkit-transform: translateZ(1px);
+    z-index: 2;
+}
+
+/*================*/
+
+/*==== Items ====*/
+
+.item-element{
+    position: absolute;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+    transition: background-color 0.3s, width 0.3s, height 0.3s;
+    -moz-transition: background-color 0.3s, width 0.3s, height 0.3s;
+    -webkit-transition: background-color 0.3s, width 0.3s, height 0.3s;
+    transform: translateZ(2px);
+    -moz-transform: translateZ(2px);
+    -webkit-transform: translateZ(2px);
+    z-index: 1;
+}
+.item-element:hover{
+    background-color: #ddd;
+}
+
+.item-mesh{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: top center 0px;
+    -webkit-transform-origin: top center 0px;
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+}
+
+.item-element::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: 14px solid #f53100;
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+.item-element::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-right: 10px solid #699600;
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.item-elem-del{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 18px;
+    height: 18px;
+    opacity: 0;
+    visibility: hidden;
+    background: #333 url('../images/ui/cross.png') center center no-repeat;
+    background-size: 10px;
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    z-index: 2;
+}
+
+.item-element:hover::after{
+    opacity: 1;
+    visibility: visible;
+}
+.item-element:hover::before{
+    opacity: 1;
+    visibility: visible;
+}
+.item-element:hover .item-elem-del{
+    opacity: 1;
+    visibility: visible;
+}
+
+/*==== TOOLBOX ====*/
+
+.side-toolbox{
+    position: absolute;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #56575c;
+    z-index: 3;
+}
+
+.wrapper-2-cols{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0 10px;
+}
+
+.wrapper-3-cols{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0 10px;
+}
+
+.side-toolbox-element{
+    align-self: center;
+    text-align: center;
+    border-radius: 40px;
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+    padding: 4px 0;
+    margin: 7px 0;
+}
+
+input, .select{
+    background-color: #333;
+    box-shadow: inset 1px 1px 4px #222;
+    -moz-box-shadow: inset 1px 1px 4px #222;
+    -webkit-box-shadow: inset 1px 1px 4px #222;
+    color: #fff;
+    outline: none;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+}
+
+.select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    background: #333 url(../images/ui/select_arrow.png) 92% center no-repeat;
+    background-size: 12px;
+    text-align: left;
+    text-indent: 8px;
+    cursor: pointer;
+}
+
+.select-container{
+    position: absolute;
+    bottom: 0;
+    left: 220px;
+    right: 0;
+    box-shadow: 0 6px 20px #666;
+    -moz-box-shadow: 0 6px 20px #666;
+    -webkit-box-shadow: 0 6px 20px #666;
+    background-color: rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    padding: 50px 20px 20px 20px;
+    z-index: 1000000;
+}
+
+.select-inner{
+    overflow-y: auto;
+    max-height: 130px;
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+    grid-gap: 20px;
+    padding: 10px;
+}
+
+.select-container.revealed{
+    opacity: 1;
+    visibility: visible;
+}
+
+.select-inner .item-choice{
+    width: 100%;
+    align-items: center;
+    align-self: center;
+    z-index: 1;
+}
+
+.item-choice img{
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    transition: box-shadow 0.2s;
+    -moz-transition: box-shadow 0.2s;
+    -webkit-transition: box-shadow 0.2s;
+    z-index: 1;
+}
+
+.item-choice img:hover{
+    box-shadow: -1px 1px 6px #888;
+    -moz-box-shadow: -1px 1px 6px #888;
+    -webkit-box-shadow: -1px 1px 6px #888;
+}
+
+.button{
+    background-color: #ddd;
+    border-radius: 40px;
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: #9fd608;
+}
+
+.close-button{
+    background: #333 url('../images/ui/cross.png') center center no-repeat;
+    position: absolute;
+    background-size: 14px;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.area-view{
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 30px;
+    height: 200px;
+}
+
+.area-view  h2{
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+
+/*================*/
+
+/*==== Cube View ====*/
+
+.cube-view-global{
+    position: absolute;
+    bottom: 60px;
+    left: 30px;
+    transform: translateX(-50%) rotate3d(1, 0, 0, -30deg);
+    -moz-transform: translateX(-50%) rotate3d(1, 0, 0, -30deg);
+    -webkit-transform: translateX(-50%) rotate3d(1, 0, 0, -30deg);
+    transform: rotate3d(1, 0, 0, -30deg);
+    width: var(--cube-view-dim);
+    height: var(--cube-view-dim);
+    perspective: 400px;
+    -webkit-perspective: 400px;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+}
+
+.cube-view, .cube-view-front, .cube-view-top, .cube-view-left{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.cube-view-front, .cube-view-top, .cube-view-left{
+    cursor: pointer;
+}
+
+.cube-view-front:hover, .cube-view-top:hover, .cube-view-left:hover{
+    background-color: #9fd608;
+}
+
+.cube-view::after{
+    content: "";
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    left: 5%;
+    top: 5%;
+    background-color: #333;
+    transform: rotateX(90deg) translateZ(-53px);
+    -moz-transform: rotateX(90deg) translateZ(-53px);
+    -webkit-transform: rotateX(90deg) translateZ(-54px);
+    filter: blur(8px);
+}
+
+.cube-view-front::before, .cube-view-top::before, .cube-view-left::before{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+    color: #333;
+}
+
+.cube-view{
+    transform: rotate3d(0, 1, 0, 45deg);
+    -moz-transform: rotate3d(0, 1, 0, 45deg);
+    -webkit-transform: rotate3d(0, 1, 0, 45deg);
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+}
+
+.cube-view-front{
+    background-color: #aaa;
+    transform: translateZ(calc(var(--cube-view-dim)/2));
+    -webkit-transform: translateZ(calc(var(--cube-view-dim)/2));
+    -moz-transform: translateZ(calc(var(--cube-view-dim)/2));
+}
+.cube-view-front::before{
+    content: "front";
+}
+
+.cube-view-top{
+    background-color: #ddd;
+    transform: rotateX(90deg) translateZ(calc(var(--cube-view-dim)/2));
+    -moz-transform: rotateX(90deg) translateZ(calc(var(--cube-view-dim)/2));
+    -webkit-transform: rotateX(90deg) translateZ(calc(var(--cube-view-dim)/2));
+}
+.cube-view-top::before{
+    content: "top";
+}
+
+.cube-view-left{
+    background-color: #727272;
+    transform: rotateY(-90deg) translateZ(calc(var(--cube-view-dim)/2));
+    -moz-transform: rotateY(-90deg) translateZ(calc(var(--cube-view-dim)/2));
+    -webkit-transform: rotateY(-90deg) translateZ(calc(var(--cube-view-dim)/2));
+}
+.cube-view-left::before{
+    content: "left";
+}
+
+/*================*/
+
+/*==== Zoom ====*/
+
+.zoom{
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 10px;
+    height: 160px;
+    background-color: #333;
+    box-shadow: inset 1px 1px 4px #222;
+    -moz-box-shadow: inset 1px 1px 4px #222;
+    -webkit-box-shadow: inset 1px 1px 4px #222;
+    border-radius: 40px;
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+}
+.zoom::before{
+    content: "";
+    position: absolute;
+    top: -28px;
+    left: -6px;
+    width: 22px;
+    height: 22px;
+    background: url('../images/ui/zoom.png') top left no-repeat;
+    background-size: cover;
+}
+
+.zoom-button{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: calc(50% - 10px);
+    left: calc(50% - 10px);
+}
+
+/*================*/
+
+/*==== Building 3D ====*/
+
+.z-move{
+    position: absolute;
+    transform-origin: top left;
+    -moz-transform-origin: top left;
+    -webkit-transform-origin: top left;
+    top: 0;
+    left: 14px;
+    height: 14px;
+    width: 60px;
+    background: #ffc400;
+    transform: rotateY(-90deg) rotateX(90deg);
+    -moz-transform: rotateY(-90deg) rotateX(90deg);
+    -webkit-transform: rotateY(-90deg) rotateX(90deg);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+}
+
+.item-element:hover .z-move{
+    opacity: 1;
+    visibility: visible;
+}
+
+.item-element-3d .item-elem-del{
+    transform-origin: bottom left;
+    -moz-transform-origin: bottom left;
+    -webkit-transform-origin: bottom left;
+    transform: rotateX(-90deg);
+    -moz-transform: rotateX(-90deg);
+    -webkit-transform: rotateX(-90deg);
+    width: 30px;
+    height: 30px;
+}
+
+.item-mesh-3d{
+    perspective: 5000px;
+    -webkit-perspective: 5000px;
+    top: 14px;
+    left: 10px;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    position: absolute;
+    transition: transform 0.2s;
+    -moz-transition: transform 0.2s;
+    -webkit-transition: transform 0.2s;
+    z-index: 5;
+}
+.item-mesh-3d:after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    background-color: #000;
+    filter: blur(14px) opacity(0.8);
+}
+
+
+.wall{
+    position: absolute;
+    background-size: 100%;
+    transform-origin: center center;
+    -moz-transform-origin: center center;
+    -webkit-transform-origin: center center;
+    background-position: center center;
+}
+
+.wall-top{
+    width: 100%;
+    height: 100%;
+}
+
+.wall-left{
+    transform: rotate3d(0, 1, 0, -90deg) rotate3d(0, 0, 1, 90deg) translateY(-100%);
+    -moz-transform: rotate3d(0, 1, 0, -90deg) rotate3d(0, 0, 1, 90deg) translateY(-100%);
+    -webkit-transform: rotate3d(0, 1, 0, -90deg) rotate3d(0, 0, 1, 90deg) translateY(-100%);
+    transform-origin: top left;
+    -webkit-transform-origin: top left;
+    -moz-transform-origin: top left;
+}
+
+.wall-right{
+    transform: rotate3d(0, 1, 0, 90deg) rotate3d(0, 0, 1, -90deg) translateY(-100%);
+    -moz-transform: rotate3d(0, 1, 0, 90deg) rotate3d(0, 0, 1, -90deg) translateY(-100%);
+    -webkit-transform: rotate3d(0, 1, 0, 90deg) rotate3d(0, 0, 1, -90deg) translateY(-100%);
+    transform-origin: top right;
+    -webkit-transform-origin: top right;
+    -moz-transform-origin: top right;
+    right: 0;
+}
+
+.wall-front{
+    transform-origin: bottom center;
+    -moz-transform-origin: bottom center;
+    -webkit-transform-origin: bottom center;
+    transform: rotate3d(1, 0, 0, -90deg);
+    -moz-transform: rotate3d(1, 0, 0, -90deg);
+    -webkit-transform: rotate3d(1, 0, 0, -90deg);
+    width: 100%;
+    bottom: 0;
+}
+
+.wall-back{
+    width: 100%;
+}
+
+/*================*/

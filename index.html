@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Mukta:400,700,800" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" media="screen" />
+
+</head>
+<body id="Body">
+
+    <div class="side-toolbox" id="side-toolbox">
+        <h2>Creation</h2>
+        <div class="wrapper-2-cols">
+            <div class="button side-toolbox-element" id="create-forest">forest</div>
+            <input type="text" class="side-toolbox-element" id="create-forest-field" placeholder="Trees qty">
+            <div class="button side-toolbox-element" id="insert-tree">tree</div>
+            <div class="select side-toolbox-element" name="choose-tree" id="choose-tree">Sel. tree</div>
+            <div class="button side-toolbox-element" id="insert-building-2d">2D building</div>
+            <div class="select side-toolbox-element" name="choose-house-2d" id="choose-house-2d">Sel. 2D build.</div>
+        </div>
+        
+        <div class="border-top">
+            <div class="button side-toolbox-element" id="insert-building-3d">3D bloc</div>
+            <div class="wrapper-3-cols">
+                <input type="text" class="side-toolbox-element" id="item-mesh-3d-width" placeholder="Width">
+                <input type="text" class="side-toolbox-element" id="item-mesh-3d-height" placeholder="Height">
+                <input type="text" class="side-toolbox-element" id="item-mesh-3d-depth" placeholder="Depth">
+            </div>
+            <div class="wrapper-2-cols">
+                <select class="select side-toolbox-element" name="texture-top" id="texture-top">
+                    <option value="top_texture.jpg">top texture</option>
+                </select>
+                <select class="select side-toolbox-element" name="texture-front" id="texture-front">
+                    <option value="front_texture.jpg">front texture</option>
+                </select>
+                <select class="select side-toolbox-element" name="texture-back" id="texture-back">
+                    <option value="back_texture.jpg">back texture</option>
+                </select>
+                <select class="select side-toolbox-element" name="texture-left" id="texture-left">
+                    <option value="left_texture.jpg">left texture</option>
+                </select>
+                <select class="select side-toolbox-element" name="texture-right" id="texture-right">
+                    <option value="right_texture.jpg">right texture</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="border-top">
+            <select class="select side-toolbox-element" name="texture-ground" id="texture-ground">
+                <option value="default_ground.jpg">sel. ground</option>
+            </select>
+        </div>
+
+        <div class="area-view">
+            <h2>View</h2>
+            <div class="zoom" id="zoom">
+                <div class="button zoom-button" id="zoom-button"></div>
+            </div>
+            <div class="cube-view-global">
+                <div class="cube-view">
+                    <div class="cube-view-front" id="cube-view-front"></div>
+                    <div class="cube-view-top" id="cube-view-top"></div>
+                    <div class="cube-view-left" id="cube-view-left"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="environment-container" id="environment-container"></div>
+
+    <script type="text/javascript" src="js/items.js"></script>
+    <script type="text/javascript" src="js/prototypes.js"></script>
+    <script type="text/javascript" src="js/ui.js"></script>
+    <script type="text/javascript" src="js/interaction.js"></script>
+</body>
+</html>
