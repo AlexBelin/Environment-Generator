@@ -10,4 +10,4 @@ Use arrow keys to turn around the scene
 
 You may use the slider in the side toolbox or '-' / '+' keys to zoom in and out
 
-![alt text](https://github.com/AlexBelin/Environment-Generator/blob/master/screens.jpg?raw=true)
+![alt text](https://github.com/AlexBelin/Environment-Generator/blob/master/screens02.jpg?raw=true)
