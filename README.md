@@ -1,6 +1,6 @@
 # Environment-Generator
 
-You will need a local server to make it work
+You will need a local webserver to make it work
 
 Left click and drag to move an item
 
