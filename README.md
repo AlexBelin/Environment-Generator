@@ -8,6 +8,6 @@ Middle Click and drag right or left to rotate a 3D block on its Z axis
 
 Use arrow keys to turn around the scene
 
-You may use the slider in the side toolbox or '-' / '+' keys to zoom in and out
+You may use the slider (with the magnifying glass icon) in the side toolbox, or '-' / '+' keys, to zoom in and out
 
 ![alt text](https://github.com/AlexBelin/Environment-Generator/blob/master/screens02.jpg?raw=true)
