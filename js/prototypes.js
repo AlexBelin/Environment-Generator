@@ -149,6 +149,7 @@ function Item3D(JsonItem, Env){
     this.MeshTextureLEFT = this.JsonItem.TextureLEFT;
     this.MeshTextureRIGHT = this.JsonItem.TextureRIGHT;
     this.ZTranslation = 0;
+    this.ZRotation = 0;
     this.MIDDLEItemClick = false;
 
     this.SetItemMesh = function(){
@@ -227,7 +228,7 @@ function Item3D(JsonItem, Env){
         this.ItemElement.addEventListener('mouseup', this.MouseUpItem.bind(this), false);
         this.ItemElement.addEventListener('mousedown', this.MIDDLEMouseDownItem.bind(this), false);
         this.ItemElement.addEventListener('mouseup', this.MIDDLEMouseUpItem.bind(this), false);
-        this.ItemElement.addEventListener('mousemove', this.MoveGizmoZ.bind(this), false);
+        this.ItemElement.addEventListener('mousemove', this.RotateGizmoZ.bind(this), false);
 
         return this.ItemElement;
     };
@@ -271,14 +272,14 @@ function Item3D(JsonItem, Env){
     this.MouseDownItem = function(){
         if(event.button == 0){
             this.ItemClick = true;
-            this.ItemMesh.style.transform = 'translate3d(0, 0, 150px)';
+            this.ItemMesh.style.transform = 'translate3d(0, 0, 150px) rotateZ(' + Number(this.ZRotation) + 'deg)';
         }
     };
 
     this.MouseUpItem = function(){
         if(event.button == 0){
             this.ItemClick = false;
-            this.ItemMesh.style.transform = 'translate3d(0, 0, ' + Number(this.ZTranslation) + 'px)';
+            this.ItemMesh.style.transform = 'translate3d(0, 0, ' + Number(this.ZTranslation) + 'px) rotateZ(' + Number(this.ZRotation) + 'deg)';
         }
     };
 
@@ -305,6 +306,14 @@ function Item3D(JsonItem, Env){
                 this.ZTranslation -= event.movementY;
             }
             this.ItemMesh.style.transform = 'translateZ(' + Number(this.ZTranslation) + 'px)';
+        }
+    };
+
+    this.RotateGizmoZ = function(event){
+        if(this.MIDDLEItemClick){
+            console.log(this.ZRotation);
+            this.ZRotation += event.movementX * -1;
+            this.ItemMesh.style.transform = 'rotateZ(' + Number(this.ZRotation) + 'deg)';
         }
     };
 }
